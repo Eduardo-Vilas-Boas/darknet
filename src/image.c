@@ -22,6 +22,8 @@
 
 extern int check_mistakes;
 //int windows = 0;
+image copy_img;
+int imagecopycount=0;
 
 float colors[6][3] = { {1,0,1}, {0,0,1},{0,1,1},{0,1,0},{1,1,0},{1,0,0} };
 
@@ -327,7 +329,10 @@ int compare_by_probs(const void *a_ptr, const void *b_ptr) {
 }
 
 void draw_detections_v3(image im, detection *dets, int num, float thresh, char **names, image **alphabet, int classes, int ext_output)
-{
+{   
+     if(imagecopycount==0)
+         copy_img = copy_image(im);
+         imagecopycount++;
     static int frame_id = 0;
     frame_id++;
 
@@ -424,19 +429,17 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
             //sprintf(image_name, "result_img/img_%d_%d_%d_%s.jpg", frame_id, img_id, best_class_id, names[best_class_id]);
             //save_image(cropped_im, image_name);
             //free_image(cropped_im);
-
+            image c1 = crop_image(copy_img, left, top, right-left, bot-top);
             if (im.c == 1) {
                 draw_box_width_bw(im, left, top, right, bot, width, 0.8);    // 1 channel Black-White
             }
             else {
                 draw_box_width(im, left, top, right, bot, width, red, green, blue); // 3 channels RGB
             }
+            
             if (alphabet) {
                 char labelstr[4096] = { 0 };
                 strcat(labelstr, names[selected_detections[i].best_class]);
-                char prob_str[10];
-                sprintf(prob_str, ": %.2f", selected_detections[i].det.prob[selected_detections[i].best_class]);
-                strcat(labelstr, prob_str);
                 int j;
                 for (j = 0; j < classes; ++j) {
                     if (selected_detections[i].det.prob[j] > thresh && j != selected_detections[i].best_class) {
@@ -446,6 +449,8 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
                 }
                 image label = get_label_v3(alphabet, labelstr, (im.h*.02));
                 //draw_label(im, top + width, left, label, rgb);
+                 		    save_image(c1, labelstr);
+
                 draw_weighted_label(im, top + width, left, label, rgb, 0.7);
                 free_image(label);
             }
@@ -514,6 +519,10 @@ void draw_detections(image im, int num, float thresh, box *boxes, float **probs,
             //    class_id, (right + left) / 2, (bot - top) / 2, right - left, bot - top);
 
             printf("\n");
+            char str[10];
+            image c1 = crop_image(im, left, top, right-left, bot-top);
+            sprintf(str, "%d", i);
+            save_image(c1,str);
             draw_box_width(im, left, top, right, bot, width, red, green, blue);
             if (alphabet) {
                 image label = get_label(alphabet, names[class_id], (im.h*.03)/10);
