@@ -451,9 +451,9 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
                 image label = get_label_v3(alphabet, labelstr, (im.h*.02));
                 //draw_label(im, top + width, left, label, rgb);
                 char image_name[150];
-                image_name[0] = i + "0";
-                image_name[1] = "_"
-                image_name[2] = "\0"
+                image_name[0] = i + '0';
+                image_name[1] = '_';
+                image_name[2] = '\0';
 
                 strcat(image_name, labelstr);
                 save_image(c1, image_name);
