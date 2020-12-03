@@ -1,5 +1,6 @@
 #/bin/bash
 
+mkdir ./predictions
 mkdir ./predictions/Neutral
 mkdir ./predictions/Fire
 mkdir ./predictions/Smoke
