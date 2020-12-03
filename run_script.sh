@@ -12,6 +12,20 @@ do
 	var="${file%.jpg}"
   	new_prefix="${var##*/}"
 
+	FILE_FIRE=./*Fire.jpg
+	FILE_SMOKE=./*Smoke.jpg	
+
+	if test -f "$FILE_FIRE"; then
+		
+	else
+		if test -f "$FILE_SMOKE"; then
+		else
+			no_prefix_name="${file##*/}"
+			mv ${file} ./predicitons/Neutral/${no_prefix_name}
+		fi
+	fi
+
+
 	for file_prediction_fire in ./*Fire.jpg
 	do		
 		#echo "${file_prediction_fire}"
