@@ -1,8 +1,8 @@
 #/bin/bash
 
-mkdir ./predicitons
-mkdir ./predicitons/Fire
-mkdir ./predicitons/Smoke
+mkdir ./predictions/Neutral
+mkdir ./predictions/Fire
+mkdir ./predictions/Smoke
 
 for file in /content/darknet/data/obj/*.jpg
 
@@ -21,7 +21,7 @@ do
 		if test -f "$FILE_SMOKE"; then
 		else
 			no_prefix_name="${file##*/}"
-			mv ${file} ./predicitons/Neutral/${no_prefix_name}
+			mv ${file} ./predictions/Neutral/${no_prefix_name}
 		fi
 	fi
 
@@ -30,14 +30,14 @@ do
 	do		
 		#echo "${file_prediction_fire}"
 		no_prefix_name="${file_prediction_fire##*/}"
-		mv ${file_prediction_fire} ./predicitons/Fire/${new_prefix}_${no_prefix_name}
+		mv ${file_prediction_fire} ./predictions/Fire/${new_prefix}_${no_prefix_name}
 	done
 
 	for file_prediction_smoke in ./*Smoke.jpg
 	do
 		#echo "${file_prediction_smoke}"
 		no_prefix_name="${file_prediction_smoke##*/}"
-		mv ${file_prediction_smoke} ./predicitons/Smoke/${new_prefix}_${no_prefix_name}
+		mv ${file_prediction_smoke} ./predictions/Smoke/${new_prefix}_${no_prefix_name}
 	done
 done
 
