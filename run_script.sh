@@ -17,7 +17,7 @@ do
 	FILE_SMOKE=./*Smoke.jpg	
 
 	if test -f "$FILE_FIRE"; then
-		
+		no_prefix_name="${file##*/}"
 	else
 		if test -f "$FILE_SMOKE"; then
 		else
