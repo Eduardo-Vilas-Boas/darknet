@@ -372,6 +372,7 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
     // image output
     qsort(selected_detections, selected_detections_num, sizeof(*selected_detections), compare_by_probs);
     for (i = 0; i < selected_detections_num; ++i) {
+
             int width = im.h * .002;
             if (width < 1)
                 width = 1;
@@ -455,7 +456,15 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
                 image_name[1] = '_';
                 image_name[2] = '\0';
 
+                char probability_string[150];
+
+                const int best_class = selected_detections[i].best_class;
+                int probability_number = int(selected_detections[i].det.prob[best_class] * 100);
+
+                sprintf(probability_string, "%d", probability_number);
+
                 strcat(image_name, labelstr);
+                strcat(image_name, probability_string);
                 save_image(c1, image_name);
 
                 draw_weighted_label(im, top + width, left, label, rgb, 0.7);
