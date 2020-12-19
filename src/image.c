@@ -463,8 +463,12 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
 
                 sprintf(probability_string, "%d", probability_number);
 
+                char underscrore[10];
+                underscrore[0] = '_';
+                underscrore[1] = '\0';
+
                 strcat(image_name, labelstr);
-                strcat(image_name, "_");
+                strcat(image_name, underscrore);
                 strcat(image_name, probability_string);
                 save_image(c1, image_name);
 
