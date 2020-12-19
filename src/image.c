@@ -459,7 +459,7 @@ void draw_detections_v3(image im, detection *dets, int num, float thresh, char *
                 char probability_string[150];
 
                 const int best_class = selected_detections[i].best_class;
-                int probability_number = int(selected_detections[i].det.prob[best_class] * 100);
+                int probability_number = (int)(selected_detections[i].det.prob[best_class] * 100);
 
                 sprintf(probability_string, "%d", probability_number);
 
