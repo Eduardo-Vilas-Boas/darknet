@@ -27,7 +27,7 @@ do
 			COUNTER_FIRE=$(( COUNTER_FIRE + 1 ))
 			echo "Fire: ${file_prediction_fire}"
 			no_prefix_name="${file_prediction_fire##*/}"
-			mv ${file_prediction_fire} ./predictions/Train/Fire/${new_prefix}_${no_prefix_name}
+			mv ${file_prediction_fire} BOUNDING_BOXES/Bounding_Boxes/Fire/${new_prefix}_${no_prefix_name}
 		fi
 	done
 
@@ -37,7 +37,7 @@ do
 			COUNTER_SMOKE=$(( COUNTER_SMOKE + 1 ))
 			echo "Smoke: ${file_prediction_smoke}"
 			no_prefix_name="${file_prediction_smoke##*/}"
-			mv ${file_prediction_smoke} ./predictions/Train/Smoke/${new_prefix}_${no_prefix_name}
+			mv ${file_prediction_smoke} YOLOV4_BOUNDING_BOXES/Bounding_Boxes/Smoke/${new_prefix}_${no_prefix_name}
 		fi
 	done
 
@@ -47,17 +47,15 @@ do
 	if [[ $COUNTER_FIRE -ne 0 ]]; then
 		no_prefix_name="${file##*/}"
 		echo "${no_prefix_name}"
-		cp ${file} ./predictions/Fire/${no_prefix_name}
 	else
 		if [[ $COUNTER_SMOKE -eq 0 ]];
 		then
 			no_prefix_name="${file##*/}"
 			echo "${no_prefix_name}"
-			cp ${file} ./predictions/Neutral/${no_prefix_name}
+			cp ${file} BOUNDING_BOXES/Bounding_Boxes/Neutral/${no_prefix_name}
 		else
 			no_prefix_name="${file##*/}"
 			echo "${no_prefix_name}"
-			cp ${file} ./predictions/Smoke/${no_prefix_name}
 		fi
 	fi
 done
